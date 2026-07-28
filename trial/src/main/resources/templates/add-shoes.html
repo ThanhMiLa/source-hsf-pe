@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoes Management</title>
+</head>
+<body>
+
+<!-- 1. TÊN HỆ THỐNG -->
+<h1>Shoes Management</h1>
+<hr/>
+
+<!-- 2. TIÊU ĐỀ MÀN HÌNH -->
+<h2>Add New Shoes</h2>
+
+<!-- Vùng hiển thị thông báo "Created new shoes successfully" (nếu có) -->
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. FORM THÊM MỚI -->
+<form th:action="@{/shoes/add}" th:object="${shoesDto}" method="post">
+
+    <table border="0" cellpadding="5">
+        <!-- FIELD 1: Shoes No -->
+        <tr>
+            <td><label for="shoesNo">Shoes No:</label></td>
+            <td>
+                <input type="text" id="shoesNo" th:field="*{shoesNo}" placeholder="e.g. SH001"/>
+                <!-- Hiển thị lỗi Validation nếu có (Dành cho Custom Engine Map errors) -->
+                <span th:if="${errors != null and errors.get('shoesNo') != null}"
+                      th:text="${errors.get('shoesNo')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 2: Shoes Name -->
+        <tr>
+            <td><label for="shoesName">Shoes Name:</label></td>
+            <td>
+                <input type="text" id="shoesName" th:field="*{shoesName}" placeholder="e.g. Adidas"/>
+                <span th:if="${errors != null and errors.get('shoesName') != null}"
+                      th:text="${errors.get('shoesName')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 3: Price -->
+        <tr>
+            <td><label for="price">Price:</label></td>
+            <td>
+                <input type="number" step="any" id="price" th:field="*{price}"/>
+                <span th:if="${errors != null and errors.get('price') != null}"
+                      th:text="${errors.get('price')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 4: Type (Dropdown / Select Box) -->
+        <tr>
+            <td><label for="type">Type:</label></td>
+            <td>
+                <select id="type" th:field="*{type}">
+                    <option value="">-- Select Type --</option>
+                    <!-- Duyệt danh sách types truyền từ Controller -->
+                    <option th:each="t : ${types}"
+                            th:value="${t.typeName}"
+                            th:text="${t.typeCode + '-' + t.typeName}">
+                    </option>
+                </select>
+                <!-- Chú thích gợi ý định dạng như trong wireframe -->
+                <small style="color: gray;">(SP-Sport, RN-Running, TN-Tennis)</small>
+                <span th:if="${errors != null and errors.get('type') != null}"
+                      th:text="${errors.get('type')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- 4. ACTION BUTTONS (ADD NEW & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Nút Submit Form -->
+                <button type="submit">Add New</button>
+
+                <!-- Nút Back quay về trang danh sách ban đầu -->
+                <a th:href="@{/shoes}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoes Management</title>
+</head>
+<body>
+
+<!-- 1. TÊN ỨNG DỤNG -->
+<h1>Shoes Management</h1>
+<hr/>
+
+<!-- 2. MÀN HÌNH CHÍNH & THÔNG BÁO (Success/Error Message) -->
+<h2>Shoes List</h2>
+
+<!-- Vùng hiển thị thông báo "Deleted successfully" hoặc thông báo chung -->
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. KHUNG SEARCH & NÚT ADD NEW -->
+<form th:action="@{/shoes}" method="get">
+    <label>Shoes Name:</label>
+    <!-- th:value="${shoesName}" giúp giữ lại từ khóa vừa gõ sau khi bấm Search -->
+    <input type="text" name="shoesName" th:value="${shoesName}" placeholder="Enter name to search..."/>
+
+    <button type="submit">Search</button>
+
+    <!-- Nút Add New chuyển hướng sang trang tạo mới -->
+    <a th:href="@{/shoes/add}">
+        <button type="button">Add New</button>
+    </a>
+</form>
+
+<br/>
+
+<!-- 4. TABLE VIEW DỮ LIỆU -->
+<h3>Shoes List</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Shoes No</th>
+        <th>Shoes Name</th>
+        <th>Type</th>
+        <th>Price ($)</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Duyệt từng phần tử trong danh sách shoesList -->
+    <tr th:each="item : ${shoesList}">
+        <!-- Lấy trực tiếp ID từ Database -->
+        <td th:text="${item.shoesId}" />
+        <td th:text="${item.shoesNo}" />
+        <td th:text="${item.shoesName}" />
+        <td th:text="${item.type}" />
+        <td th:text="${item.price}" />
+
+        <!-- Cột Action: Delete | View/Edit -->
+        <td>
+            <!-- Link Delete gửi ID kèm confirmation -->
+            <a th:href="@{/shoes/delete/{id}(id=${item.shoesId})}"
+               onclick="return confirm('Are you sure you want to delete this item?');">
+                Delete
+            </a>
+            |
+            <!-- Link View Detail / Edit -->
+            <a th:href="@{/shoes/view/{id}(id=${item.shoesId})}">View</a>
+        </td>
+    </tr>
+
+    <!-- Hiển thị khi danh sách rỗng -->
+    <tr th:if="${#lists.isEmpty(shoesList)}">
+        <td colspan="6" style="text-align: center; color: red;">No records found!</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

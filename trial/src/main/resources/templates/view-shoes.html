@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoes Management</title>
+</head>
+<body>
+
+<!-- 1. TÊN HỆ THỐNG -->
+<h1>Shoes Management</h1>
+<hr/>
+
+<!-- 2. TIÊU ĐỀ MÀN HÌNH -->
+<h2>View Shoes Info</h2>
+
+<!-- 3. BẢNG HIỂN THỊ THÔNG TIN CHI TIẾT (READ-ONLY) -->
+<table border="0" cellpadding="5">
+    <!-- FIELD 1: Shoes No -->
+    <tr>
+        <td><label for="shoesNo">Shoes No:</label></td>
+        <td>
+            <!-- Dùng readonly hoặc disabled để không cho sửa -->
+            <input type="text" id="shoesNo" th:value="${shoesDto.shoesNo}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 2: Shoes Name -->
+    <tr>
+        <td><label for="shoesName">Shoes name:</label></td>
+        <td>
+            <input type="text" id="shoesName" th:value="${shoesDto.shoesName}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 3: Price -->
+    <tr>
+        <td><label for="price">Price:</label></td>
+        <td>
+            <input type="text" id="price" th:value="${shoesDto.price}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 4: Type -->
+    <tr>
+        <td><label for="type">Type:</label></td>
+        <td>
+            <!-- Khóa dropdown bằng cách dùng thuộc tính disabled -->
+            <select id="type" disabled>
+                <option th:value="${shoesDto.type}"
+                        th:text="${shoesDto.type}" selected></option>
+            </select>
+        </td>
+    </tr>
+
+    <!-- 4. ACTION BUTTON (CHỈ CÓ NÚT BACK) -->
+    <tr>
+        <td></td>
+        <td>
+            <a th:href="@{/shoes}">
+                <button type="button">Back</button>
+            </a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
