@@ -204,6 +204,24 @@ public class CustomValidationEngine {
                     }
                 }
 
+                // =========================================================================
+                // 10. CHECK REGEX PATTERN
+                // =========================================================================
+                if (field.isAnnotationPresent(RegexPattern.class) && value != null) {
+                    RegexPattern anno = field.getAnnotation(RegexPattern.class);
+                    String strVal = value.toString().trim();
+
+                    if (!strVal.isEmpty() && !anno.regexp().isEmpty()) {
+                        if (!strVal.matches(anno.regexp())) {
+                            String msg = anno.message().isEmpty()
+                                    ? "Value does not match required pattern"
+                                    : anno.message();
+                            errors.put(fieldName, msg);
+                            continue;
+                        }
+                    }
+                }
+
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
