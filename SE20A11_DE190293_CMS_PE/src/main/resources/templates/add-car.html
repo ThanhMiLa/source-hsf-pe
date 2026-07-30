@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Car Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING & MESSAGES -->
+<h2>Add New Car</h2>
+
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. ADD FORM -->
+<form th:action="@{/cars/add}" th:object="${carDto}" method="post">
+
+    <table border="0" cellpadding="5">
+
+        <tr>
+            <td><label for="model">Model:</label></td>
+            <td>
+                <input type="text" id="model" th:field="*{model}"/>
+                <span th:if="${errors != null and errors.get('model') != null}"
+                      th:text="${errors.get('model')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="brand">Brand:</label></td>
+            <td>
+                <select id="brand" th:field="*{brand}">
+                    <option value="">-- Select Brand --</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Hyundai">Hyundai</option>
+                </select>
+                <span th:if="${errors != null and errors.get('brand') != null}"
+                      th:text="${errors.get('brand')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="price">Price ($):</label></td>
+            <td>
+                <input type="number" id="price" th:field="*{price}"/>
+                <span th:if="${errors != null and errors.get('price') != null}"
+                      th:text="${errors.get('price')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="status">Status:</label></td>
+            <td>
+                <select id="status" th:field="*{status}">
+                    <option value="">-- Select Status --</option>
+                    <option value="AC-Active">AC-Active</option>
+                    <option value="IN-Inactive">IN-Inactive</option>
+                    <option value="DR-Draft">DR-Draft</option>
+                </select>
+                <small style="color: gray;">(AC-Active, IN-Inactive, DR-Draft)</small>
+                <span th:if="${errors != null and errors.get('status') != null}"
+                      th:text="${errors.get('status')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="color">Color:</label></td>
+            <td>
+                <select id="color" th:field="*{color}">
+                    <option value="">-- Select Color --</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="White">White</option>
+                    <option value="Black">Black</option>
+                </select>
+                <span th:if="${errors != null and errors.get('color') != null}"
+                      th:text="${errors.get('color')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="year">Year:</label></td>
+            <td>
+                <select id="year" th:field="*{year}">
+                    <option value="">-- Select Year --</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+                <span th:if="${errors != null and errors.get('year') != null}"
+                      th:text="${errors.get('year')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="plate">Plate:</label></td>
+            <td>
+                <input type="text" id="plate" th:field="*{plate}"/>
+                <span th:if="${errors != null and errors.get('plate') != null}"
+                      th:text="${errors.get('plate')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- 4. ACTION BUTTONS (SUBMIT & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Form Submit Button -->
+                <button type="submit">Save New</button>
+
+                <!-- Back Button linking to list view -->
+                <a th:href="@{/cars}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
