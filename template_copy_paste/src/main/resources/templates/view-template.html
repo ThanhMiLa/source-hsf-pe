@@ -15,35 +15,11 @@
 
 <!-- 3. READ-ONLY DETAIL TABLE -->
 <table border="0" cellpadding="5">
-    <!-- FIELD 1: String Field -->
+    <!-- Copy thẻ <tr> ra theo sô lượng filed muốn hiển thị-->
     <tr>
         <td><label for="templateString">Template String:</label></td>
         <td>
             <input type="text" id="templateString" th:value="${templateDto.templateString}" readonly/>
-        </td>
-    </tr>
-
-    <!-- FIELD 2: Integer Field -->
-    <tr>
-        <td><label for="templateInteger">Template Integer:</label></td>
-        <td>
-            <input type="text" id="templateInteger" th:value="${templateDto.templateInteger}" readonly/>
-        </td>
-    </tr>
-
-    <!-- FIELD 3: Double Field -->
-    <tr>
-        <td><label for="templateDouble">Template Double ($):</label></td>
-        <td>
-            <input type="text" id="templateDouble" th:value="${templateDto.templateDouble}" readonly/>
-        </td>
-    </tr>
-
-    <!-- FIELD 4: Date Field -->
-    <tr>
-        <td><label for="templateLocalDate">Template Date:</label></td>
-        <td>
-            <input type="text" id="templateLocalDate" th:value="${templateDto.templateLocalDate}" readonly/>
         </td>
     </tr>
 
