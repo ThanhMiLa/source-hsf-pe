@@ -17,55 +17,47 @@
 <table border="0" cellpadding="5">
     <!-- FIELD 1: String Field -->
     <tr>
-        <td><label for="model">Model:</label></td>
+        <td align="right"><label for="model">Model:</label></td>
         <td>
             <input type="text" id="model" th:value="${carDto.model}" readonly/>
         </td>
     </tr>
 
     <tr>
-        <td><label for="brand">Brand:</label></td>
+        <td align="right"><label for="brand">Brand:</label></td>
         <td>
             <input type="text" id="brand" th:value="${carDto.brand}" readonly/>
         </td>
-    </tr>
 
-    <tr>
-        <td><label for="price">Price ($):</label></td>
-        <td>
-            <input type="text" id="price" th:value="${carDto.price}" readonly/>
-        </td>
-    </tr>
-
-    <tr>
-        <td><label for="status">Status:</label></td>
-        <td>
-            <input type="text" id="status" th:value="${carDto.status}" readonly/>
-        </td>
-    </tr>
-
-    <tr>
-        <td><label for="color">Color:</label></td>
+        <td align="right"><label for="color">Color:</label></td>
         <td>
             <input type="text" id="color" th:value="${carDto.color}" readonly/>
         </td>
     </tr>
 
     <tr>
-        <td><label for="year">Year:</label></td>
+        <td align="right"><label for="price">Price ($):</label></td>
+        <td>
+            <input type="text" id="price" th:value="${carDto.price}" readonly/>
+        </td>
+
+        <td align="right"><label for="year">Year:</label></td>
         <td>
             <input type="text" id="year" th:value="${carDto.year}" readonly/>
         </td>
     </tr>
 
-
     <tr>
-        <td><label for="plate">Plate:</label></td>
+        <td align="right"><label for="status">Status:</label></td>
+        <td>
+            <input type="text" id="status" th:value="${carDto.status}" readonly/>
+        </td>
+
+        <td align="right"><label for="plate">Plate:</label></td>
         <td>
             <input type="text" id="plate" th:value="${carDto.plate}" readonly/>
         </td>
     </tr>
-
 
 
     <!-- 4. ACTION BUTTON (BACK ONLY) -->
