@@ -4,7 +4,6 @@ Thư mục "SE20A11_DE190293_SP26_PE1" là đề bài "Tour Management"
 
 Thư mục "trial" là đề bài "Shoes Management"
 
-Thư mục "template_copy_paste" là các template có sẵn copy paste lúc thi
 
 Thư mục `template_copy_paste` chứa sẵn toàn bộ bộ khung (Boilerplate) cho bài thi Practical Exam môn HSF302 Spring Boot + Thymeleaf. Khi bắt đầu bài thi, bạn chỉ cần copy folder này, đổi tên dự án và refactor tên thuộc tính theo yêu cầu của đề bài.
 
