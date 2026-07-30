@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tour Management</title>
+</head>
+<body>
+
+<!-- 1. TÊN HỆ THỐNG -->
+<h1>Tour Management</h1>
+<hr/>
+
+<!-- 2. TIÊU ĐỀ MÀN HÌNH -->
+<h2>View Tour Info</h2>
+
+<!-- 3. BẢNG HIỂN THỊ THÔNG TIN CHI TIẾT (READ-ONLY) -->
+<table border="0" cellpadding="5">
+    <!-- FIELD 1: Shoes No -->
+    <tr>
+        <td><label for="tourName">Tour Name:</label></td>
+        <td>
+            <!-- Dùng readonly hoặc disabled để không cho sửa -->
+            <input type="text" id="tourName" th:value="${tourDto.tourName}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 2: Shoes Name -->
+    <tr>
+        <td><label for="destination">Destination:</label></td>
+        <td>
+            <input type="text" id="destination" th:value="${tourDto.destination}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 3: Price -->
+    <tr>
+        <td><label for="price">Price per person ($):</label></td>
+        <td>
+            <input type="text" id="price" th:value="${tourDto.price}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 3: Price -->
+    <tr>
+        <td><label for="duration">Duration:</label></td>
+        <td>
+            <input type="text" id="duration" th:value="${tourDto.duration}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 3: Price -->
+    <tr>
+        <td><label for="capacity">Max Capacity:</label></td>
+        <td>
+            <input type="text" id="capacity" th:value="${tourDto.capacity}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 3: Price -->
+    <tr>
+        <td><label for="startDate">Start Date(dd/MM/yyyy):</label></td>
+        <td>
+            <input type="date" id="startDate" th:value="${tourDto.startDate}" readonly/>
+        </td>
+    </tr>
+
+    <!-- FIELD 4: Type -->
+    <tr>
+        <td><label for="status">Status:</label></td>
+        <td>
+            <!-- Khóa dropdown bằng cách dùng thuộc tính disabled -->
+            <select id="status" disabled>
+                <option th:value="${tourDto.status}"
+                        th:text="${tourDto.status}" selected></option>
+            </select>
+        </td>
+    </tr>
+
+    <!-- 4. ACTION BUTTON (CHỈ CÓ NÚT BACK) -->
+    <tr>
+        <td></td>
+        <td>
+            <a th:href="@{/tours}">
+                <button type="button">Back</button>
+            </a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

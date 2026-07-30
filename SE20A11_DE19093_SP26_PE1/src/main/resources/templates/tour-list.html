@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoes Management</title>
+</head>
+<body>
+
+<!-- 1. TÊN ỨNG DỤNG -->
+<h1>Tour Management</h1>
+<hr/>
+
+<!-- 2. MÀN HÌNH CHÍNH & THÔNG BÁO (Success/Error Message) -->
+<h2>Tour List</h2>
+
+<!-- Vùng hiển thị thông báo "Deleted successfully" hoặc thông báo chung -->
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. KHUNG SEARCH & NÚT ADD NEW -->
+<form th:action="@{/tours}" method="get">
+    <label>Tour Name:</label>
+
+    <input type="text" name="tourName" th:value="${tourName}" placeholder="Enter name to search..."/>
+
+    <button type="submit">Search</button>
+
+    <!-- Nút Add New chuyển hướng sang trang tạo mới -->
+    <a th:href="@{/tours/add}">
+        <button type="button">Add New</button>
+    </a>
+</form>
+
+<br/>
+
+<!-- 4. TABLE VIEW DỮ LIỆU -->
+<h3>Shoes List</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>NO</th>
+        <th>Tour Name</th>
+        <th>Destination</th>
+        <th>Duration</th>
+        <th>Price ($)</th>
+        <th>Capacity</th>
+        <th>Start Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Duyệt từng phần tử trong danh sách shoesList -->
+    <tr th:each="item : ${tourList}">
+        <!-- Lấy trực tiếp ID từ Database -->
+        <td th:text="${item.id}" />
+        <td th:text="${item.tourName}" />
+        <td th:text="${item.destination}" />
+        <td th:text="${item.duration}" />
+        <td th:text="${item.price}" />
+        <td th:text="${item.capacity}" />
+        <td th:text="${item.startDate}" />
+        <td th:text="${item.status}" />
+
+        <!-- Cột Action: Delete | View/Edit -->
+        <td>
+            <!-- Link Delete gửi ID kèm confirmation -->
+            <a th:href="@{/tours/delete/{id}(id=${item.id})}"
+               onclick="return confirm('Are you sure you want to delete this item?');">
+                Delete
+            </a>
+            |
+            <!-- Link View Detail / Edit -->
+            <a th:href="@{/tours/view/{id}(id=${item.id})}">View</a>
+        </td>
+    </tr>
+
+    <!-- Hiển thị khi danh sách rỗng -->
+    <tr th:if="${#lists.isEmpty(tourList)}">
+        <td colspan="6" style="text-align: center; color: red;">No records found!</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

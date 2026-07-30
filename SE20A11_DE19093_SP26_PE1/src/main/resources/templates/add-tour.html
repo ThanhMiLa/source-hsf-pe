@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tour Management</title>
+</head>
+<body>
+
+<!-- 1. TÊN HỆ THỐNG -->
+<h1>Tour Management</h1>
+<hr/>
+
+<!-- 2. TIÊU ĐỀ MÀN HÌNH -->
+<h2>Add New Tour</h2>
+
+<!-- Vùng hiển thị thông báo "Created new shoes successfully" (nếu có) -->
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. FORM THÊM MỚI -->
+<form th:action="@{/tours/add}" th:object="${tourDto}" method="post">
+
+    <table border="0" cellpadding="5">
+        <!-- FIELD 1: Tour Name -->
+        <tr>
+            <td><label for="tourName">Tour Name:</label></td>
+            <td>
+                <input type="text" id="tourName" th:field="*{tourName}" placeholder="Da Nang"/>
+                <!-- Hiển thị lỗi Validation nếu có (Dành cho Custom Engine Map errors) -->
+                <span th:if="${errors != null and errors.get('tourName') != null}"
+                      th:text="${errors.get('tourName')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 2: Destination -->
+        <tr>
+            <td><label for="destination">Destination:</label></td>
+            <td>
+                <input type="text" id="destination" th:field="*{destination}" placeholder="Du lich Da Nang"/>
+                <span th:if="${errors != null and errors.get('destination') != null}"
+                      th:text="${errors.get('destination')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 3: Price -->
+        <tr>
+            <td><label for="price">Price per person ($):</label></td>
+            <td>
+                <input type="number" step="any" id="price" th:field="*{price}"/>
+                <span th:if="${errors != null and errors.get('price') != null}"
+                      th:text="${errors.get('price')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 4: Destination -->
+        <tr>
+            <td><label for="duration">Duration:</label></td>
+            <td>
+                <input type="number" step="any" id="duration" th:field="*{duration}"/>
+                <span th:if="${errors != null and errors.get('duration') != null}"
+                      th:text="${errors.get('duration')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 5: Capacity -->
+        <tr>
+            <td><label for="capacity">Max Capacity:</label></td>
+            <td>
+                <input type="number" step="any" id="capacity" th:field="*{capacity}"/>
+                <span th:if="${errors != null and errors.get('capacity') != null}"
+                      th:text="${errors.get('capacity')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 6: Start Date -->
+        <tr>
+            <td><label for="startDate">Start Date(dd/MM/yyyy):</label></td>
+            <td>
+                <input type="date" step="any" id="startDate" th:field="*{startDate}"/>
+                <span th:if="${errors != null and errors.get('startDate') != null}"
+                      th:text="${errors.get('startDate')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 7: Type (Dropdown / Select Box) -->
+        <tr>
+            <td><label for="status">Status:</label></td>
+            <td>
+                <select id="status" th:field="*{status}">
+                    <option value="">-- Select Status --</option>
+                    <option value="AC-Active">-- AC-Active --</option>
+                    <option value="IN-Inactive">-- IN-Inactive --</option>
+                    <option value="DR-Draft">-- DR-Draft --</option>
+                </select>
+                <!-- Chú thích gợi ý định dạng như trong wireframe -->
+                <small style="color: gray;">(AC-Active, IN-Inactive, DR-Draft)</small>
+                <span th:if="${errors != null and errors.get('status') != null}"
+                      th:text="${errors.get('status')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- 4. ACTION BUTTONS (ADD NEW & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Nút Submit Form -->
+                <button type="submit">Add New</button>
+
+                <!-- Nút Back quay về trang danh sách ban đầu -->
+                <a th:href="@{/tours}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
