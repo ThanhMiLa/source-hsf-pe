@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface AlphaNumeric {
-    String message() default "Only letters and digits are allowed";
+public @interface ValidDate {
+    boolean futureOnly() default false;
+    long maxDaysFromToday() default -1;
+    String message() default "";
 }

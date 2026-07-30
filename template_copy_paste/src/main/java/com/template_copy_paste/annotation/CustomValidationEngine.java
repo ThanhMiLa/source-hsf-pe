@@ -1,4 +1,4 @@
-package com.trial.annotation;
+package com.template_copy_paste.annotation;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;

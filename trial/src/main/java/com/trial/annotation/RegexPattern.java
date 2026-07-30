@@ -7,6 +7,14 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface AlphaNumeric {
-    String message() default "Only letters and digits are allowed";
+public @interface RegexPattern {
+    /**
+     * Biểu thức chính quy (Regular Expression) để kiểm tra.
+     */
+    String regexp();
+
+    /**
+     * Thông báo lỗi tùy chỉnh.
+     */
+    String message() default "";
 }

@@ -1,4 +1,4 @@
-package com.trial.annotation;
+package com.template_copy_paste.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

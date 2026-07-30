@@ -1,4 +1,4 @@
-package com.trial.annotation;
+package com.template_copy_paste.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface AlphaNumeric {
-    String message() default "Only letters and digits are allowed";
+public @interface StringLength {
+    int min() default 0;
+    int max() default Integer.MAX_VALUE;
+    String message() default "Độ dài chuỗi không hợp lệ";
 }

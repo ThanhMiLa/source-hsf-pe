@@ -1,27 +1,15 @@
 package com.trial.dto;
 
-import com.trial.annotation.AlphaNumeric;
-import com.trial.annotation.NotBlank;
-import com.trial.annotation.PriceRange;
-import com.trial.annotation.StringLength;
-
 public class ShoesDTO {
 
     private Integer shoesId;
 
-    @NotBlank
-    @StringLength(min = 10, max = 10)
-    @AlphaNumeric
     private String shoesNo;
 
-    @NotBlank
-    @StringLength(min = 1, max = 100)
     private String shoesName;
 
-    @NotBlank
     private String type;
 
-    @PriceRange(min = 0, max = 100000)
     private double price;
 
     public ShoesDTO() {

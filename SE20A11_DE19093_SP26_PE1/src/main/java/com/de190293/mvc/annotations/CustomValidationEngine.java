@@ -72,32 +72,58 @@ public class CustomValidationEngine {
                 // =========================================================================
                 // 4. CHECK PRICE RANGE (Số thực / Giá tiền)
                 // =========================================================================
-                if (field.isAnnotationPresent(PriceRange.class) && value instanceof Number num) {
+                if (field.isAnnotationPresent(PriceRange.class)) {
                     PriceRange range = field.getAnnotation(PriceRange.class);
-                    double val = num.doubleValue();
+                    Double val = null;
 
-                    if (val <= range.min() || val >= range.max()) {
-                        String msg = range.message().isEmpty()
-                                ? "Value must be greater than " + range.min() + " and less than " + range.max()
-                                : range.message();
-                        errors.put(fieldName, msg);
-                        continue;
+                    if (value instanceof Number num) {
+                        val = num.doubleValue();
+                    } else if (value instanceof String str && !str.trim().isEmpty()) {
+                        try {
+                            val = Double.parseDouble(str.trim());
+                        } catch (NumberFormatException e) {
+                            errors.put(fieldName, "Must be a valid number");
+                            continue;
+                        }
+                    }
+
+                    if (val != null) {
+                        if (val <= range.min() || val >= range.max()) {
+                            String msg = range.message().isEmpty()
+                                    ? "Value must be greater than " + range.min() + " and less than " + range.max()
+                                    : range.message();
+                            errors.put(fieldName, msg);
+                            continue;
+                        }
                     }
                 }
 
                 // =========================================================================
                 // 5. CHECK INT RANGE (Số nguyên)
                 // =========================================================================
-                if (field.isAnnotationPresent(IntRange.class) && value instanceof Number num) {
+                if (field.isAnnotationPresent(IntRange.class)) {
                     IntRange range = field.getAnnotation(IntRange.class);
-                    long val = num.longValue();
+                    Long val = null;
 
-                    if (val < range.min() || val > range.max()) {
-                        String msg = range.message().isEmpty()
-                                ? "Value must be between " + range.min() + " and " + range.max()
-                                : range.message();
-                        errors.put(fieldName, msg);
-                        continue;
+                    if (value instanceof Number num) {
+                        val = num.longValue();
+                    } else if (value instanceof String str && !str.trim().isEmpty()) {
+                        try {
+                            val = Long.parseLong(str.trim());
+                        } catch (NumberFormatException e) {
+                            errors.put(fieldName, "Must be a valid integer number");
+                            continue;
+                        }
+                    }
+
+                    if (val != null) {
+                        if (val < range.min() || val > range.max()) {
+                            String msg = range.message().isEmpty()
+                                    ? "Value must be between " + range.min() + " and " + range.max()
+                                    : range.message();
+                            errors.put(fieldName, msg);
+                            continue;
+                        }
                     }
                 }
 

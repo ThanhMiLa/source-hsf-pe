@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Template Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING & MESSAGES -->
+<h2>Add New Template</h2>
+
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. ADD FORM -->
+<form th:action="@{/template/add}" th:object="${templateDto}" method="post">
+
+    <table border="0" cellpadding="5">
+        <!-- FIELD 1: String Input -->
+        <tr>
+            <td><label for="templateString">Template String:</label></td>
+            <td>
+                <input type="text" id="templateString" th:field="*{templateString}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('templateString') != null}"
+                      th:text="${errors.get('templateString')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 2: Integer Input -->
+        <tr>
+            <td><label for="templateInteger">Template Integer:</label></td>
+            <td>
+                <input type="number" id="templateInteger" th:field="*{templateInteger}" placeholder="Enter integer..."/>
+                <span th:if="${errors != null and errors.get('templateInteger') != null}"
+                      th:text="${errors.get('templateInteger')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 3: Double / Decimal Input -->
+        <tr>
+            <td><label for="templateDouble">Template Double ($):</label></td>
+            <td>
+                <input type="number" step="any" id="templateDouble" th:field="*{templateDouble}" placeholder="Enter price..."/>
+                <span th:if="${errors != null and errors.get('templateDouble') != null}"
+                      th:text="${errors.get('templateDouble')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 4: Date Input -->
+        <tr>
+            <td><label for="templateLocalDate">Template Date (YYYY-MM-DD):</label></td>
+            <td>
+                <input type="date" id="templateLocalDate" th:field="*{templateLocalDate}"/>
+                <span th:if="${errors != null and errors.get('templateLocalDate') != null}"
+                      th:text="${errors.get('templateLocalDate')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 5A: Dropdown CỐ ĐỊNH (Hardcoded Status / Enum) -->
+        <tr>
+            <td><label for="status">Status (Fixed values):</label></td>
+            <td>
+                <select id="status" th:field="*{status}">
+                    <option value="">-- Select Status --</option>
+                    <option value="AC-Active">AC-Active</option>
+                    <option value="IN-Inactive">IN-Inactive</option>
+                    <option value="DR-Draft">DR-Draft</option>
+                </select>
+                <small style="color: gray;">(AC-Active, IN-Inactive, DR-Draft)</small>
+                <span th:if="${errors != null and errors.get('status') != null}"
+                      th:text="${errors.get('status')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- FIELD 5B: Dropdown DỮ LIỆU ĐỘNG (Lấy từ Database qua Controller) -->
+        <tr>
+            <td><label for="type">Type (From DB):</label></td>
+            <td>
+                <select id="type" th:field="*{type}">
+                    <option value="">-- Select Type --</option>
+                    <!-- Duyệt danh sách truyền từ Controller (ví dụ: model.addAttribute("types", list)) -->
+                    <option th:each="t : ${types}"
+                            th:value="${t.typeName}"
+                            th:text="${t.typeCode + '-' + t.typeName}">
+                    </option>
+                </select>
+                <span th:if="${errors != null and errors.get('type') != null}"
+                      th:text="${errors.get('type')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- 4. ACTION BUTTONS (SUBMIT & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Form Submit Button -->
+                <button type="submit">Add New</button>
+
+                <!-- Back Button linking to list view -->
+                <a th:href="@{/template}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
