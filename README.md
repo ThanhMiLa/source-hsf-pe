@@ -6,8 +6,7 @@
 
 - Thư mục "trial" là đề bài "Shoes Management"
 
-
-Thư mục `template_copy_paste` chứa sẵn toàn bộ bộ khung (Boilerplate) cho bài thi Practical Exam môn HSF302 Spring Boot + Thymeleaf. Khi bắt đầu bài thi, bạn chỉ cần copy folder này, đổi tên dự án và refactor tên thuộc tính theo yêu cầu của đề bài.
+- Thư mục `template_copy_paste` chứa sẵn toàn bộ bộ khung (Boilerplate) cho bài thi Practical Exam môn HSF302 Spring Boot + Thymeleaf. Khi bắt đầu bài thi, bạn chỉ cần copy folder này, đổi tên dự án và refactor tên thuộc tính theo yêu cầu của đề bài.
 
 ---
 
