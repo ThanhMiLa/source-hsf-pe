@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Student Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING & MESSAGES -->
+<h2>Add New Student</h2>
+
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. ADD FORM -->
+<form th:action="@{/students/add}" th:object="${studentDto}" method="post">
+
+    <table border="0" cellpadding="5">
+        <!-- FIELD 1: String Input -->
+        <tr>
+            <td><label for="studentNo">Student No:</label></td>
+            <td>
+                <input type="text" id="studentNo" th:field="*{studentNo}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('studentNo') != null}"
+                      th:text="${errors.get('studentNo')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="fullName">Full Name:</label></td>
+            <td>
+                <input type="text" id="fullName" th:field="*{fullName}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('fullName') != null}"
+                      th:text="${errors.get('fullName')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="email">Email:</label></td>
+            <td>
+                <input type="text" id="email" th:field="*{email}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('email') != null}"
+                      th:text="${errors.get('email')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="phone">Phone:</label></td>
+            <td>
+                <input type="text" id="phone" th:field="*{phone}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('phone') != null}"
+                      th:text="${errors.get('phone')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="dob">Date  of Birth:</label></td>
+            <td>
+                <input type="date" id="dob" th:field="*{dob}"/>
+                <span th:if="${errors != null and errors.get('dob') != null}"
+                      th:text="${errors.get('dob')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td><label>Courses:</label></td>
+            <td>
+                <!-- Duyệt qua danh sách courses truyền từ Controller -->
+                <span th:each="c : ${courses}" style="margin-right: 15px;">
+            <input type="checkbox"
+                   th:field="*{courses}"
+                   th:value="${c.courseName}" />
+            <label th:text="${c.courseName}"></label>
+        </span>
+
+                <!-- Hiển thị lỗi validation (nếu có) -->
+                <span th:if="${errors != null and errors.get('courses') != null}"
+                      th:text="${errors.get('courses')}"
+                      style="color: red; display: block;"></span>
+            </td>
+        </tr>
+
+
+        <!-- 4. ACTION BUTTONS (SUBMIT & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Form Submit Button -->
+                <button type="submit">Add New</button>
+
+                <!-- Back Button linking to list view -->
+                <a th:href="@{/students}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>

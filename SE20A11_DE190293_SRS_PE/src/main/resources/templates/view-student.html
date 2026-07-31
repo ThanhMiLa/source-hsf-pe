@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Student Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING -->
+<h2>View Student Info</h2>
+
+<!-- 3. READ-ONLY DETAIL TABLE -->
+<table border="0" cellpadding="5">
+    <!-- Copy thẻ <tr> ra theo sô lượng filed muốn hiển thị-->
+    <tr>
+        <td><label for="studentNo">Student No:</label></td>
+        <td>
+            <input type="text" id="studentNo" th:value="${studentDto.studentNo}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="fullName">Full Name:</label></td>
+        <td>
+            <input type="text" id="fullName" th:value="${studentDto.fullName}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="email">Email:</label></td>
+        <td>
+            <input type="text" id="email" th:value="${studentDto.email}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="phone">Phone:</label></td>
+        <td>
+            <input type="text" id="phone" th:value="${studentDto.phone}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="dob">Date of Birth:</label></td>
+        <td>
+            <input type="text" id="dob" th:value="${studentDto.dob}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="courses">Courses:</label></td>
+        <td>
+            <input type="text" id="courses" th:value="${studentDto.courses}" readonly/>
+        </td>
+    </tr>
+
+    <!-- 4. ACTION BUTTON (BACK ONLY) -->
+    <tr>
+        <td></td>
+        <td>
+            <a th:href="@{/students}">
+                <button type="button">Back</button>
+            </a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
