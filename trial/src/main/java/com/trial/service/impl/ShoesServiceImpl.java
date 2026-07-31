@@ -5,6 +5,7 @@ import com.trial.entity.Shoes;
 import com.trial.repository.ShoesRepository;
 import com.trial.repository.ShoesTypeRepository;
 import com.trial.service.ShoesService;
+import com.trial.util.GenericMapper;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,7 @@ public class ShoesServiceImpl implements ShoesService {
 
         return shoesList.stream()
                 .map(shoes -> {
-                    ShoesDTO shoesDTO = new ShoesDTO();
-                    shoesDTO.setShoesId(shoes.getId());
-                    shoesDTO.setShoesName(shoes.getShoesName());
-                    shoesDTO.setShoesNo(shoes.getShoesNo());
-                    shoesDTO.setPrice(shoes.getPrice());
+                    ShoesDTO shoesDTO = GenericMapper.map(shoes, ShoesDTO.class);
                     shoesDTO.setType(shoes.getShoesType().getTypeName());
                     return shoesDTO;
                 })
@@ -51,10 +48,7 @@ public class ShoesServiceImpl implements ShoesService {
 
     @Override
     public void addShoes(ShoesDTO shoesDTO){
-        Shoes shoes = new Shoes();
-        shoes.setShoesNo(shoesDTO.getShoesNo());
-        shoes.setShoesName(shoesDTO.getShoesName());
-        shoes.setPrice(shoesDTO.getPrice());
+        Shoes shoes = GenericMapper.map(shoesDTO, Shoes.class);
         shoes.setShoesType(shoesTypeRepository.findByTypeName(shoesDTO.getType()));
         shoesRepository.save(shoes);
     }
@@ -66,10 +60,7 @@ public class ShoesServiceImpl implements ShoesService {
             return null;
         }
 
-        ShoesDTO shoesDTO = new ShoesDTO();
-        shoesDTO.setShoesNo(shoes.getShoesNo());
-        shoesDTO.setShoesName(shoes.getShoesName());
-        shoesDTO.setPrice(shoes.getPrice());
+        ShoesDTO shoesDTO = GenericMapper.map(shoes, ShoesDTO.class);
         shoesDTO.setType(shoes.getShoesType().getTypeName());
 
         return shoesDTO;

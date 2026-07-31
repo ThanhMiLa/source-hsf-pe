@@ -6,6 +6,7 @@ import com.de190293.mvc.entity.Book;
 import com.de190293.mvc.repository.BookRepository;
 import com.de190293.mvc.repository.BookTypeRepository;
 import com.de190293.mvc.service.BookService;
+import com.de190293.mvc.util.GenericMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,14 +46,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addBook(BookDto bookDto) {
-        Book book = new Book();
-        book.setBookName(bookDto.getBookName());
-        book.setBookNo(bookDto.getBookNo());
-        book.setAuthorEmail(bookDto.getAuthorEmail());
-        book.setIsbn(bookDto.getIsbn());
-        book.setPrice(bookDto.getPrice());
-        book.setPublishDate(bookDto.getPublishDate());
-        book.setPublisherPhone(bookDto.getPublisherPhone());
+        Book book = GenericMapper.map(bookDto, Book.class);
         book.setBookType(bookTypeRepository.findByTypeName(bookDto.getBookType()));
         bookRepository.save(book);
     }
@@ -70,15 +64,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private BookDto getBookDto(Book book) {
-        BookDto bookDto = new BookDto();
-        bookDto.setId(book.getId());
-        bookDto.setBookName(book.getBookName());
-        bookDto.setBookNo(book.getBookNo());
-        bookDto.setAuthorEmail(book.getAuthorEmail());
-        bookDto.setIsbn(book.getIsbn());
-        bookDto.setPrice(book.getPrice());
-        bookDto.setPublishDate(book.getPublishDate());
-        bookDto.setPublisherPhone(book.getPublisherPhone());
+        BookDto bookDto = GenericMapper.map(book, BookDto.class);
         bookDto.setBookType(book.getBookType().getTypeName());
         return bookDto;
     }

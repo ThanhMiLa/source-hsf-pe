@@ -4,11 +4,10 @@ import com.de190293.mvc.dto.CarDto;
 import com.de190293.mvc.entity.Car;
 import com.de190293.mvc.repository.CarRepository;
 import com.de190293.mvc.service.CarService;
+import com.de190293.mvc.util.GenericMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -40,14 +39,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void addNewCar(CarDto carDto) {
-        Car car = new Car();
-        car.setBrand(carDto.getBrand());
-        car.setColor(carDto.getColor());
-        car.setModel(carDto.getModel());
-        car.setPrice(carDto.getPrice());
-        car.setPlate(carDto.getPlate());
-        car.setYear(carDto.getYear());
-        car.setStatus(carDto.getStatus());
+        Car car = GenericMapper.map(carDto, Car.class);
         carRepository.save(car);
     }
 
@@ -67,15 +59,7 @@ public class CarServiceImpl implements CarService {
     }
 
     private CarDto mapToCarDto(Car car){
-        CarDto carDto = new CarDto();
-        carDto.setId(car.getId());
-        carDto.setBrand(car.getBrand());
-        carDto.setModel(car.getModel());
-        carDto.setColor(car.getColor());
-        carDto.setPlate(car.getPlate());
-        carDto.setPrice(car.getPrice());
-        carDto.setYear(car.getYear());
-        carDto.setStatus(car.getStatus());
+        CarDto carDto = GenericMapper.map(car, CarDto.class);
         return carDto;
     }
 

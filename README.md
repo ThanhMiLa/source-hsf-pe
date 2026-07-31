@@ -39,10 +39,12 @@ template_copy_paste/
 │   │   └── TemplateEntity.java            # Entity JPA mẫu
 │   ├── repository/
 │   │   └── TemplateRepository.java        # JpaRepository mẫu (Search, Exists)
-│   └── service/
-│       ├── TemplateService.java
-│       └── impl/
-│           └── TemplateServiceImpl.java   # Service CRUD chuẩn
+│   ├── service/
+│   │   ├── TemplateService.java
+│   │   └── impl/
+│   │       └── TemplateServiceImpl.java   # Service CRUD chuẩn
+│   └── util/                          # Các lớp tiện ích bổ sung
+│       └── GenericMapper.java         # Mapper tự dựng ánh xạ Entity <-> DTO bằng Reflection
 └── src/main/resources/
     ├── application.properties             # Cấu hình Port, DB SQL Server
     └── templates/
@@ -286,6 +288,85 @@ Dùng khi dropdown hiển thị danh sách entity phụ lấy từ DB (Ví dụ:
     </td>
 </tr>
 ```
+
+---
+
+## 🔄 HƯỚNG DẪN SỬ DỤNG GENERICMAPPER (MAPPING TỰ DỰNG ĐỂ THAY THẾ THƯ VIỆN BỊ CẤM)
+
+Trong phòng thi, các thư viện ánh xạ đối tượng tự động như **ModelMapper**, **MapStruct**, hoặc **Lombok** có thể bị cấm hoặc không được cấu hình sẵn. Lớp `GenericMapper` tự build sử dụng Java Reflection để tự động sao chép các trường dữ liệu có cùng tên và cùng kiểu dữ liệu giữa **Entity** và **DTO**.
+
+### 1. Chi tiết mã nguồn lớp `GenericMapper`
+Lớp này nằm tại: `com.template_copy_paste.util.GenericMapper`
+
+```java
+package com.template_copy_paste.util;
+
+import java.lang.reflect.Field;
+
+public class GenericMapper {
+
+    public static <S, T> T map(S source, Class<T> targetClass) {
+        if (source == null) return null;
+
+        try {
+            // Khởi tạo instance mới của class đích (targetClass)
+            T target = targetClass.getDeclaredConstructor().newInstance();
+
+            // Lấy tất cả các trường (fields) của class đích và class nguồn
+            Field[] targetFields = targetClass.getDeclaredFields();
+            Class<?> sourceClass = source.getClass();
+
+            for (Field targetField : targetFields) {
+                targetField.setAccessible(true);
+                try {
+                    // Tìm trường có cùng tên bên class nguồn (source)
+                    Field sourceField = sourceClass.getDeclaredField(targetField.getName());
+                    sourceField.setAccessible(true);
+
+                    // Nếu cùng kiểu dữ liệu thì copy giá trị sang
+                    if (targetField.getType().equals(sourceField.getType())) {
+                        Object value = sourceField.get(source);
+                        targetField.set(target, value);
+                    }
+                } catch (NoSuchFieldException ignored) {
+                    // Bỏ qua nếu trường của class đích không tồn tại bên class nguồn
+                }
+            }
+            return target;
+        } catch (Exception e) {
+            throw new RuntimeException("Error mapping object", e);
+        }
+    }
+}
+```
+
+### 2. Cách sử dụng trong Service / Controller
+
+#### A. Ánh xạ đối tượng đơn lẻ (Single Object)
+* **Từ Entity sang DTO (để hiển thị lên View):**
+  ```java
+  BookDto dto = GenericMapper.map(entity, BookDto.class);
+  ```
+* **Từ DTO sang Entity (để lưu xuống Database):**
+  ```java
+  BookEntity entity = GenericMapper.map(dto, BookEntity.class);
+  ```
+
+#### B. Ánh xạ danh sách đối tượng (List of Objects)
+* **Chuyển đổi `List<Entity>` thành `List<DTO>`:**
+  ```java
+  List<BookDto> dtos = entities.stream()
+                               .map(entity -> GenericMapper.map(entity, BookDto.class))
+                               .collect(Collectors.toList());
+  ```
+
+> ⚠️ **LƯU Ý KHI SỬ DỤNG:**
+> 1. Các trường cần ánh xạ giữa Entity và DTO phải **trùng khớp hoàn toàn cả về Tên (Name) và Kiểu dữ liệu (Data Type)** (Ví dụ: cả hai đều là `String bookName`, `Double price`, hoặc `Integer id`).
+> 2. Nếu kiểu dữ liệu khác nhau (Ví dụ: Entity lưu `BookType type` kiểu Object/Entity, nhưng DTO lưu `String bookType` kiểu String), `GenericMapper` sẽ **bỏ qua trường này** (không báo lỗi). Bạn cần thực hiện gán thủ công trường đó sau khi map:
+>    ```java
+>    BookDto dto = GenericMapper.map(entity, BookDto.class);
+>    dto.setBookType(entity.getBookType().getTypeName()); // Gán thủ công trường khác kiểu dữ liệu
+>    ```
 
 ---
 
