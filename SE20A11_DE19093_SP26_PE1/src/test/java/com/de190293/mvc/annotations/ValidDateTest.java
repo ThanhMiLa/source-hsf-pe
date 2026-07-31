@@ -39,4 +39,24 @@ class ValidDateTest {
         assertTrue(errors.containsKey("startDate"));
         assertEquals("Date cannot exceed 30 days from today", errors.get("startDate"));
     }
+
+    static class PastDto {
+        @ValidDate(pastOnly = true, maxDaysInPast = 15)
+        private LocalDate createdDate;
+
+        public PastDto(LocalDate createdDate) {
+            this.createdDate = createdDate;
+        }
+    }
+
+    @Test
+    void testMaxDaysInPast() {
+        PastDto validDto = new PastDto(LocalDate.now().minusDays(10));
+        assertTrue(CustomValidationEngine.validate(validDto).isEmpty());
+
+        PastDto invalidDto = new PastDto(LocalDate.now().minusDays(20));
+        Map<String, String> errors = CustomValidationEngine.validate(invalidDto);
+        assertTrue(errors.containsKey("createdDate"));
+        assertEquals("Date cannot exceed 15 days in the past", errors.get("createdDate"));
+    }
 }

@@ -11,5 +11,6 @@ public @interface ValidDate {
     boolean futureOnly() default false;
     boolean pastOnly() default false;
     long maxDaysFromToday() default -1;
+    long maxDaysInPast() default -1;
     String message() default "";
 }

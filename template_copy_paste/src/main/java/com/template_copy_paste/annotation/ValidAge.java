@@ -7,10 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface ValidDate {
-    boolean futureOnly() default false;
-    boolean pastOnly() default false;
-    long maxDaysFromToday() default -1;
-    long maxDaysInPast() default -1;
+public @interface ValidAge {
+    int min() default -1;
+    int max() default -1;
     String message() default "";
 }

@@ -2,6 +2,7 @@ package com.template_copy_paste.annotation;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -198,6 +199,69 @@ public class CustomValidationEngine {
                             if (dateVal.isAfter(maxDate)) {
                                 String msg = anno.message().isEmpty()
                                         ? "Date cannot exceed " + anno.maxDaysFromToday() + " days from today"
+                                        : anno.message();
+                                errors.put(fieldName, msg);
+                                continue;
+                            }
+                        }
+
+                        // Check khoảng range tối đa quá khứ (- N ngày tính từ ngày hiện tại)
+                        if (anno.maxDaysInPast() >= 0) {
+                            LocalDate minPastDate = today.minusDays(anno.maxDaysInPast());
+                            if (dateVal.isBefore(minPastDate)) {
+                                String msg = anno.message().isEmpty()
+                                        ? "Date cannot exceed " + anno.maxDaysInPast() + " days in the past"
+                                        : anno.message();
+                                errors.put(fieldName, msg);
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+                // =========================================================================
+                // 8.5. CHECK VALID AGE (LocalDate hoặc String đại diện cho ngày sinh)
+                // =========================================================================
+                if (field.isAnnotationPresent(ValidAge.class)) {
+                    ValidAge anno = field.getAnnotation(ValidAge.class);
+                    LocalDate dateVal = null;
+
+                    if (value instanceof LocalDate ld) {
+                        dateVal = ld;
+                    } else if (value instanceof String str && !str.trim().isEmpty()) {
+                        try {
+                            dateVal = LocalDate.parse(str.trim());
+                        } catch (DateTimeParseException e) {
+                            String msg = anno.message().isEmpty() ? "Invalid date format (expected YYYY-MM-DD)" : anno.message();
+                            errors.put(fieldName, msg);
+                            continue;
+                        }
+                    }
+
+                    if (dateVal != null) {
+                        LocalDate today = LocalDate.now();
+                        int age = Period.between(dateVal, today).getYears();
+
+                        if (anno.min() >= 0 && anno.max() >= 0) {
+                            if (age < anno.min() || age > anno.max()) {
+                                String msg = anno.message().isEmpty()
+                                        ? "Age must be between " + anno.min() + " and " + anno.max() + " years old"
+                                        : anno.message();
+                                errors.put(fieldName, msg);
+                                continue;
+                            }
+                        } else if (anno.min() >= 0) {
+                            if (age < anno.min()) {
+                                String msg = anno.message().isEmpty()
+                                        ? "Age must be at least " + anno.min() + " years old"
+                                        : anno.message();
+                                errors.put(fieldName, msg);
+                                continue;
+                            }
+                        } else if (anno.max() >= 0) {
+                            if (age > anno.max()) {
+                                String msg = anno.message().isEmpty()
+                                        ? "Age must be at most " + anno.max() + " years old"
                                         : anno.message();
                                 errors.put(fieldName, msg);
                                 continue;
