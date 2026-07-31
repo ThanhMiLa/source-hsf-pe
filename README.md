@@ -1,10 +1,12 @@
 # 🚀 HƯỚNG DẪN SỬ DỤNG TEMPLATE THI THỰC HÀNH HSF302 (SPRING BOOT + THYMELEAF)
 
-- Thư mục "SE20A11_DE190293_SP26_PE1" là đề bài "Tour Management"
+- Thư mục "SE20A11_DE190293_SP26_PE1" là đề bài "Tour Management System"
 
-- Thư mục "SE20A11_DE190293_CMS_PE" là đề bài "Car Management"
+- Thư mục "SE20A11_DE190293_CMS_PE" là đề bài "Car Management System"
 
-- Thư mục "trial" là đề bài "Shoes Management"
+- Thư mục "SE20A11_DE190293_BMD_PE" là đề bài "Book Management System"
+
+- Thư mục "trial" là đề bài "Shoes Management System"
 
 - Thư mục `template_copy_paste` chứa sẵn toàn bộ bộ khung (Boilerplate) cho bài thi Practical Exam môn HSF302 Spring Boot + Thymeleaf. Khi bắt đầu bài thi, bạn chỉ cần copy folder này, đổi tên dự án và refactor tên thuộc tính theo yêu cầu của đề bài.
 
