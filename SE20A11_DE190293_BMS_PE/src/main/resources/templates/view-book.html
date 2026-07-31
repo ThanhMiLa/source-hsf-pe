@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Book Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING -->
+<h2>View Book Info</h2>
+
+<!-- 3. READ-ONLY DETAIL TABLE -->
+<table border="0" cellpadding="5">
+    <!-- Copy thẻ <tr> ra theo sô lượng filed muốn hiển thị-->
+    <tr>
+        <td><label for="bookNo">Book No:</label></td>
+        <td>
+            <input type="text" id="bookNo" th:value="${bookDto.bookNo}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="bookName">Book Name:</label></td>
+        <td>
+            <input type="text" id="bookName" th:value="${bookDto.bookName}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="isbn">ISBN:</label></td>
+        <td>
+            <input type="text" id="isbn" th:value="${bookDto.isbn}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="authorEmail">Author Email:</label></td>
+        <td>
+            <input type="text" id="authorEmail" th:value="${bookDto.authorEmail}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="publisherPhone">Publisher Phone:</label></td>
+        <td>
+            <input type="text" id="publisherPhone" th:value="${bookDto.publisherPhone}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="publishDate">Publish Date:</label></td>
+        <td>
+            <input type="text" id="publishDate" th:value="${bookDto.publishDate}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="price">Price ($):</label></td>
+        <td>
+            <input type="text" id="price" th:value="${bookDto.price}" readonly/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="bookType">Type:</label></td>
+        <td>
+            <input type="text" id="bookType" th:value="${bookDto.bookType}" readonly/>
+        </td>
+    </tr>
+
+    <!-- 4. ACTION BUTTON (BACK ONLY) -->
+    <tr>
+        <td></td>
+        <td>
+            <a th:href="@{/books}">
+                <button type="button">Back</button>
+            </a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

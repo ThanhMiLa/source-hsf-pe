@@ -183,6 +183,15 @@ public class CustomValidationEngine {
                             continue;
                         }
 
+                        // Check nếu bắt buộc phải là ngày quá khứ (<= today)
+                        if (anno.pastOnly() && dateVal.isAfter(today)) {
+                            String msg = anno.message().isEmpty()
+                                    ? "Date must be today or in the past"
+                                    : anno.message();
+                            errors.put(fieldName, msg);
+                            continue;
+                        }
+
                         // Check khoảng range tối đa (+ N ngày tính từ ngày hiện tại)
                         if (anno.maxDaysFromToday() >= 0) {
                             LocalDate maxDate = today.plusDays(anno.maxDaysFromToday());

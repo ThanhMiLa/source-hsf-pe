@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface ValidDate {
     boolean futureOnly() default false;
+    boolean pastOnly() default false;
     long maxDaysFromToday() default -1;
     String message() default "";
 }

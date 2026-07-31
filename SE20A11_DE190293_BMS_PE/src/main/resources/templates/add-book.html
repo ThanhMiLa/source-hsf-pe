@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Book Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING & MESSAGES -->
+<h2>Add New Book</h2>
+
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. ADD FORM -->
+<form th:action="@{/books/add}" th:object="${bookDto}" method="post">
+
+    <table border="0" cellpadding="5">
+
+        <tr>
+            <td><label for="bookNo">Book No:</label></td>
+            <td>
+                <input type="text" id="bookNo" th:field="*{bookNo}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('bookNo') != null}"
+                      th:text="${errors.get('bookNo')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="bookName">Book Name:</label></td>
+            <td>
+                <input type="text" id="bookName" th:field="*{bookName}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('bookName') != null}"
+                      th:text="${errors.get('bookName')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td><label for="isbn">ISBN:</label></td>
+            <td>
+                <input type="text" id="isbn" th:field="*{isbn}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('isbn') != null}"
+                      th:text="${errors.get('isbn')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="authorEmail">Author Email:</label></td>
+            <td>
+                <input type="text" id="authorEmail" th:field="*{authorEmail}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('authorEmail') != null}"
+                      th:text="${errors.get('authorEmail')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="publisherPhone">Publisher Phone:</label></td>
+            <td>
+                <input type="text" id="publisherPhone" th:field="*{publisherPhone}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('publisherPhone') != null}"
+                      th:text="${errors.get('publisherPhone')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="publishDate">Publisher Date:</label></td>
+            <td>
+                <input type="date" id="publishDate" th:field="*{publishDate}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('publishDate') != null}"
+                      th:text="${errors.get('publishDate')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="price">Price ($):</label></td>
+            <td>
+                <input type="number" step="any" id="price" th:field="*{price}" placeholder="Enter price..."/>
+                <span th:if="${errors != null and errors.get('price') != null}"
+                      th:text="${errors.get('price')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td><label for="bookType">Type:</label></td>
+            <td>
+                <select id="bookType" th:field="*{bookType}">
+                    <option value="">-- Select Type --</option>
+                    <!-- Duyệt danh sách truyền từ Controller (ví dụ: model.addAttribute("types", list)) -->
+                    <option th:each="t : ${types}"
+                            th:value="${t.typeName}"
+                            th:text="${t.typeCode + '-' + t.typeName}">
+                    </option>
+                </select>
+                <small style="color: gray;">(FC-Fiction, SC-Science, CD-Children)</small>
+                <span th:if="${errors != null and errors.get('bookType') != null}"
+                      th:text="${errors.get('bookType')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <!-- 4. ACTION BUTTONS (SUBMIT & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Form Submit Button -->
+                <button type="submit">Add New</button>
+
+                <!-- Back Button linking to list view -->
+                <a th:href="@{/books}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>

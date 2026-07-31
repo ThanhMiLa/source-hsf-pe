@@ -109,7 +109,7 @@ public String addEntity(@ModelAttribute("dto") MyDto dto, Model model, RedirectA
 | `@StringLength` | `min`, `max`, `message` | Kiểm tra độ dài chuỗi và tự động chặn khoảng trắng 2 đầu. | `@StringLength(min = 1, max = 200, message = "Length 1-200")` |
 | `@IntRange` | `min`, `max`, `message` | Kiểm tra giá trị số nguyên trong khoảng `[min, max]`. | `@IntRange(min = 1, max = 1000)` |
 | `@PriceRange` | `min`, `max`, `message` | Kiểm tra giá trị số thực (Double/Float) trong khoảng `(min, max)`. | `@PriceRange(min = 1.0, max = 10000.0)` |
-| `@ValidDate` | `futureOnly`, `maxDaysFromToday`, `message` | Kiểm tra ngày (LocalDate/String): Bắt buộc ngày tương lai và/hoặc tối đa N ngày tính từ hôm nay. | `@ValidDate(futureOnly = true, maxDaysFromToday = 300)` |
+| `@ValidDate` | `futureOnly`, `pastOnly`, `maxDaysFromToday`, `message` | Kiểm tra ngày (LocalDate/String): Bắt buộc ngày tương lai, hoặc ngày quá khứ, và/hoặc tối đa N ngày tính từ hôm nay. | `@ValidDate(futureOnly = true, maxDaysFromToday = 300)` hoặc `@ValidDate(pastOnly = true)` |
 | `@ValidStatus` | `allowed`, `caseSensitive`, `message` | Kiểm tra chuỗi nằm trong danh sách các giá trị cho phép. | `@ValidStatus(allowed = {"AC-Active", "IN-Inactive", "DR-Draft"})` |
 | `@AlphaNumeric` | `message` | Chỉ cho phép chữ cái (a-Z) và số (0-9). | `@AlphaNumeric(message = "Only letters and numbers allowed")` |
 | `@VNPhone` | `message` | Kiểm tra số điện thoại Việt Nam (10 chữ số, bắt đầu bằng 0). | `@VNPhone(message = "Invalid VN phone number")` |

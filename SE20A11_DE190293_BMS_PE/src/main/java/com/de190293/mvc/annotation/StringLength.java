@@ -1,4 +1,4 @@
-package com.de190293.mvc.annotations;
+package com.de190293.mvc.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,9 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface ValidDate {
-    boolean futureOnly() default false;
-    boolean pastOnly() default false;
-    long maxDaysFromToday() default -1;
-    String message() default "";
+public @interface StringLength {
+    int min() default 0;
+    int max() default Integer.MAX_VALUE;
+    String message() default "Độ dài chuỗi không hợp lệ";
 }
