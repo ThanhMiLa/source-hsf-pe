@@ -4,6 +4,7 @@ import com.de190293.mvc.dto.TourDto;
 import com.de190293.mvc.entity.Tour;
 import com.de190293.mvc.repository.TourRepository;
 import com.de190293.mvc.service.TourService;
+import com.de190293.mvc.util.GenericMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,15 +41,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void addTour(TourDto tourDto) {
-        Tour tour = new Tour();
-        tour.setTourName(tourDto.getTourName());
-        tour.setDestination(tourDto.getDestination());
-        tour.setCapacity(tourDto.getCapacity());
-        tour.setDuration(tourDto.getDuration());
-        tour.setPrice(tourDto.getPrice());
-        tour.setStartDate(tourDto.getStartDate());
-        tour.setStatus(tourDto.getStatus());
-
+        Tour tour = GenericMapper.map(tourDto, Tour.class);
         tourRepository.save(tour);
     }
 
@@ -65,15 +58,7 @@ public class TourServiceImpl implements TourService {
     }
 
     private TourDto mapToTourReponse(Tour tour){
-        TourDto tourResponse = new TourDto();
-        tourResponse.setId(tour.getId());
-        tourResponse.setTourName(tour.getTourName());
-        tourResponse.setCapacity(tour.getCapacity());
-        tourResponse.setDestination(tour.getDestination());
-        tourResponse.setPrice(tour.getPrice());
-        tourResponse.setStartDate(tour.getStartDate());
-        tourResponse.setDuration(tour.getDuration());
-        tourResponse.setStatus(tour.getStatus());
+        TourDto tourResponse = GenericMapper.map(tour, TourDto.class);
         return tourResponse;
     }
 }
