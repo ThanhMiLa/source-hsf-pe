@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Device Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Smart Device Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING & MESSAGES -->
+<h2>Add New Device</h2>
+
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. ADD FORM -->
+<form th:action="@{/devices/add}" th:object="${deviceDto}" method="post">
+
+    <table border="0" cellpadding="5">
+
+        <tr>
+            <td align="right"><label for="deviceCode">Device Code:</label></td>
+            <td>
+                <input type="text" id="deviceCode" th:field="*{deviceCode}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('deviceCode') != null}"
+                      th:text="${errors.get('deviceCode')}"
+                      style="color: red;"></span>
+            </td>
+
+            <td align="right"><label for="categoryName">Category:</label></td>
+            <td>
+                <select id="categoryName" th:field="*{categoryName}">
+                    <option value="">-- Select Type --</option>
+                    <!-- Duyệt danh sách truyền từ Controller (ví dụ: model.addAttribute("types", list)) -->
+                    <option th:each="t : ${categories}"
+                            th:value="${t.categoryName}"
+                            th:text="${t.categoryName}">
+                    </option>
+                </select>
+                <span th:if="${errors != null and errors.get('categoryName') != null}"
+                      th:text="${errors.get('categoryName')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right"><label for="deviceName">Device Name:</label></td>
+            <td>
+                <input type="text" id="deviceName" th:field="*{deviceName}" placeholder="Enter text..."/>
+                <span th:if="${errors != null and errors.get('deviceName') != null}"
+                      th:text="${errors.get('deviceName')}"
+                      style="color: red;"></span>
+            </td>
+
+            <td align="right"><label for="price">Price ($):</label></td>
+            <td>
+                <input type="number" step="any" id="price" th:field="*{price}" placeholder="Enter price..."/>
+                <span th:if="${errors != null and errors.get('price') != null}"
+                      th:text="${errors.get('price')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right"><label for="warrantyMonths">Warranty (months):</label></td>
+            <td>
+                <input type="number" id="warrantyMonths" th:field="*{warrantyMonths}" placeholder="Enter integer..."/>
+                <span th:if="${errors != null and errors.get('warrantyMonths') != null}"
+                      th:text="${errors.get('warrantyMonths')}"
+                      style="color: red;"></span>
+            </td>
+
+            <td align="right"><label for="installationDate">Installation Date (dd/MM/yyyy):</label></td>
+            <td>
+                <input type="date" id="installationDate" th:field="*{installationDate}"/>
+                <span th:if="${errors != null and errors.get('installationDate') != null}"
+                      th:text="${errors.get('installationDate')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="status">Status:</label></td>
+            <td>
+                <select id="status" th:field="*{status}">
+                    <option value="">-- Select Status --</option>
+                    <option value="Active">AC-Active</option>
+                    <option value="Inactive">IN-Inactive</option>
+                    <option value="Draft">DR-Draft</option>
+                </select>
+                <small style="color: gray;">(AC-Active, IN-Inactive, DR-Draft)</small>
+                <span th:if="${errors != null and errors.get('status') != null}"
+                      th:text="${errors.get('status')}"
+                      style="color: red;"></span>
+            </td>
+        </tr>
+
+
+        <!-- 4. ACTION BUTTONS (SUBMIT & BACK) -->
+        <tr>
+            <td></td>
+            <td>
+                <!-- Form Submit Button -->
+                <button type="submit">Save</button>
+
+                <!-- Back Button linking to list view -->
+                <a th:href="@{/devices}">
+                    <button type="button">Back</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>

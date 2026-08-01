@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Device Management</title>
+</head>
+<body>
+
+<!-- 1. SYSTEM TITLE -->
+<h1>Smart Device Management</h1>
+<hr/>
+
+<!-- 2. PAGE HEADING & FLASH MESSAGES -->
+<h2>Smart Device List</h2>
+
+<!-- Green success message (e.g. "Deleted successfully", "Added successfully") -->
+<div th:if="${message != null}">
+    <p style="color: green; font-weight: bold;" th:text="${message}"></p>
+</div>
+<!-- Red error message -->
+<div th:if="${errorMessage != null}">
+    <p style="color: red; font-weight: bold;" th:text="${errorMessage}"></p>
+</div>
+
+<!-- 3. SEARCH FORM & ADD NEW BUTTON -->
+<form th:action="@{/devices}" method="get">
+    <label>Device Name:</label>
+    <!-- Preserve search input value after search -->
+    <input type="text" name="deviceName" th:value="${deviceName}" placeholder="Enter name to search..."/>
+
+    <button type="submit">Search</button>
+
+    <!-- Add New button linking to add form -->
+    <a th:href="@{/devices/add}">
+        <button type="button">Add New</button>
+    </a>
+</form>
+
+<br/>
+
+<!-- 4. DATA TABLE -->
+<h3>Template Data List</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>Device name</th>
+        <th>Category</th>
+        <th>Price ($)</th>
+        <th>Installation Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through each item in templateList -->
+    <tr th:each="item : ${deviceList}">
+        <td th:text="${item.deviceCode}" />
+        <td th:text="${item.deviceName}" />
+        <td th:text="${item.categoryName}" />
+        <td th:text="${item.price}" />
+        <td th:text="${item.installationDate}" />
+        <td th:text="${item.status}" />
+
+        <!-- Action Column: Delete | View -->
+        <td>
+            <!-- Delete Link with JS confirmation dialog -->
+            <a th:href="@{/devices/delete/{id}(id=${item.id})}"
+               onclick="return confirm('Are you sure you want to delete this item?');">
+                Delete
+            </a>
+            |
+            <!-- View Link -->
+            <a th:href="@{/devices/view/{id}(id=${item.id})}">View</a>
+        </td>
+    </tr>
+
+    <!-- Display message when list is empty -->
+    <tr th:if="${#lists.isEmpty(deviceList)}">
+        <td colspan="6" style="text-align: center; color: red;">No records found!</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
