@@ -6,6 +6,8 @@
 
 - Thư mục "SE20A11_DE190293_BMD_PE" là đề bài "Book Management System"
 
+- Thư mục "SE20A11_DE190293_SDM_PE" là đề bài "System Device Management"
+
 - Thư mục "trial" là đề bài "Shoes Management System"
 
 - Thư mục `template_copy_paste` chứa sẵn toàn bộ bộ khung (Boilerplate) cho bài thi Practical Exam môn HSF302 Spring Boot + Thymeleaf. Khi bắt đầu bài thi, bạn chỉ cần copy folder này, đổi tên dự án và refactor tên thuộc tính theo yêu cầu của đề bài.
